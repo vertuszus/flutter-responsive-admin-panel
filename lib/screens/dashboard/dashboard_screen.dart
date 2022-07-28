@@ -1,10 +1,12 @@
 import 'package:admin/constants.dart';
+import 'package:admin/responsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import 'components/header.dart';
 import 'components/my_files.dart';
+import 'components/recent_files.dart';
 import 'components/storage_details.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -28,32 +30,24 @@ class DashboardScreen extends StatelessWidget {
                     children: [
                       MyFiles(),
                       SizedBox(height: defaultPadding),
-                      Container(
-                        padding: EdgeInsets.all(defaultPadding),
-                        decoration: BoxDecoration(
-                          color: secondaryColor,
-                          borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                          ),
+                      RecentFiles(),
+                      if (Responsive.isMobile(context))
+                        SizedBox(
+                          height: defaultPadding,
                         ),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Recent Files'
-                            ),
-                          ],
-                        ),
-                      ),
+                      if (Responsive.isMobile(context)) StorageDetails(),
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: defaultPadding,
-                ),
-                Expanded(
-                  flex: 2,
-                  child: StorageDetails(),
-                ),
+                if (!Responsive.isMobile(context))
+                  SizedBox(
+                    width: defaultPadding,
+                  ),
+                if (!Responsive.isMobile(context))
+                  Expanded(
+                    flex: 2,
+                    child: StorageDetails(),
+                  ),
               ],
             ),
           ],
